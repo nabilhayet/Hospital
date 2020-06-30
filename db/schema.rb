@@ -20,11 +20,13 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "doctors", force: :cascade do |t|
     t.string "name"
+    t.string "email"
     t.string "password_digest"
   end
 
   create_table "patients", force: :cascade do |t|
     t.string "name"
+    t.string "email"
     t.string "password_digest"
   end
 
