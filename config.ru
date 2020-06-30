@@ -1,7 +1,7 @@
 require './config/environment'
 require_relative 'app/controllers/doctors_controller'
 require_relative 'app/controllers/patients_controller'
-require_relative 'app/controllers/appointments_controller'
+
 
 
 
