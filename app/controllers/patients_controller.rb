@@ -1,19 +1,22 @@
 class PatientsController < ApplicationController
-  configure do
-    enable :sessions unless test?
-    set :session_secret, "secret"
-  end
+
 
   get '/registrations/patient' do
     erb :'patients/registration/patient'
   end
 
   post '/registrations' do
-    @patient = Patient.new(name: params["name"], email: params["email"], password: params["password"])
-    @patient.save
-    session[:patient_id] = @patient.id
-
-    redirect '/home/patient'
+    @patient = Patient.find_by(email: params["email"])
+    if @patient
+      flash.next[:message] = "Email address already exists."
+      redirect 'patients/registration/patient'
+    else
+      @patient = Patient.new(name: params["name"], email: params["email"], password: params["password"])
+      @patient.save
+      flash.next[:message] = "Successfully registered."
+      session[:patient_id] = @patient.id
+      redirect '/home/patient'
+    end
   end
 
   get '/login/patient' do
@@ -21,7 +24,7 @@ class PatientsController < ApplicationController
   end
 
   post '/login' do
-    @patient = Patient.find_by(email: params[:email], password: params[:password])
+    @patient = Patient.find_by(email: params[:email])
     if @patient
       session[:patient_id] = @patient.id
       redirect '/profile/patient'
