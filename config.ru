@@ -14,5 +14,5 @@ use Rack::MethodOverride
 
 use DoctorsController
 use PatientsController
-use AppointmentsController
+
 run ApplicationController
