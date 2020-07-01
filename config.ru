@@ -1,7 +1,7 @@
 require './config/environment'
 require_relative 'app/controllers/doctors_controller'
 require_relative 'app/controllers/patients_controller'
-
+require_relative 'app/controllers/appointments_controller'
 
 
 
@@ -14,5 +14,6 @@ use Rack::MethodOverride
 
 use DoctorsController
 use PatientsController
+use AppointmentsController
 
 run ApplicationController
