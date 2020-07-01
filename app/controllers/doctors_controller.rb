@@ -24,7 +24,7 @@ class DoctorsController < ApplicationController
 
   post '/logins' do
     @doctor = Doctor.find_by(email: params[:email])
-    if @doctor
+    if @doctor && @doctor.authenticate(params[:password])
       session[:doctor_id] = @doctor.id
       redirect '/profile/doctor'
     end

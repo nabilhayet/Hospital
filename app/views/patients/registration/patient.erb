@@ -1,8 +1,9 @@
 <h1>Sign Up Below:</h1>
   
- <% if flash[:message] %>
-  <%= flash[:message] %>
-<% end %>
+ 
+    <%= flash[:message] %>
+ 
+ 
 <form method="POST" action="/registrations">
 
       <p>Name:<input type="text" name="name" id="name" required></p>

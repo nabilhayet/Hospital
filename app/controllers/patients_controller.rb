@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by(email: params["email"])
     if @patient
       flash.next[:message] = "Email address already exists."
-      redirect 'patients/registration/patient'
+      redirect '/registrations/patient'
     else
       @patient = Patient.new(name: params["name"], email: params["email"], password: params["password"])
       @patient.save
@@ -25,7 +25,7 @@ class PatientsController < ApplicationController
 
   post '/login' do
     @patient = Patient.find_by(email: params[:email])
-    if @patient
+    if @patient && @patient.authenticate(params[:password])
       session[:patient_id] = @patient.id
       redirect '/profile/patient'
     end
