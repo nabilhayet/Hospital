@@ -1,19 +1,25 @@
 class AppointmentsController < ApplicationController
 
+
   get '/appointment' do
-  @doctor = Doctor.all
-
-  erb :'appointments/new'
-end
-
-post '/appointments' do
-    self.current_user
-    redirect "appointments/#{@appointment.id}"
+    @doctor = Doctor.all
+    if ApplicationController.is_logged_in?(session)
+      @patient = ApplicationController.current_user(session)
+      erb :'appointments/new'
+    else
+      erb :'/patients/new'
+    end
   end
 
-  get '/appointments/:id' do
-
+  post '/appointments' do
+    @patient = ApplicationController.current_user(session)
+    if @patient
+     erb :'/appointments/edit'
+   else
+     erb :'/appointments/show'
+   end
   end
+
 
 
 end

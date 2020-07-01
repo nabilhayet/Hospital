@@ -18,4 +18,23 @@ class ApplicationController < Sinatra::Base
     erb :welcome
   end
 
+  def self.current_user(session)
+    if session.key?("patient_id")
+      @p = Patient.find_by_id(session[:patient_id])
+      @p
+    else
+      @d = Doctor.find_by_id(session[:doctor_id])
+      @d
+    end
+  end 
+
+  def self.is_logged_in?(session)
+    if session.key?("patient_id")
+      !!session[:patient_id]
+    else
+      !!session[:doctor_id]
+    end
+  end
+
+
 end

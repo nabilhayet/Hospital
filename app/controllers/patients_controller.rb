@@ -29,12 +29,16 @@ class PatientsController < ApplicationController
       session[:patient_id] = @patient.id
       redirect '/profile/patient'
     end
-    redirect '/login/patient'
+      redirect '/login/patient'
   end
 
   get '/profile/patient' do
-    erb :'/patients/new'
-  end
+    if ApplicationController.is_logged_in?(session)
+      erb :'/patients/new'
+    else
+      erb :'/patients/home/patient'
+    end
+  end 
 
   get '/sessions/logout' do
     session.clear
