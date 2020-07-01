@@ -8,7 +8,7 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.find_by(email: params["email"])
     if @doctor
       flash.next[:message] = "Email address already exists."
-      redirect 'doctors/registration/doctor'
+      redirect '/registrations/doctor'
     else
       @doctor = Doctor.new(name: params["name"], email: params["email"], password: params["password"])
       @doctor.save
