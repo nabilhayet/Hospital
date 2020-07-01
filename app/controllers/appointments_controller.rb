@@ -15,7 +15,8 @@ class AppointmentsController < ApplicationController
     @patient = ApplicationController.current_user(session)
     if @patient
        if !params["patient"]["doctor_ids"].empty?
-            @patient.doctors << params["patient"]["doctor_ids"]
+            @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
+            @patient.doctors << @doctor 
             redirect "/appointment/#{@patient.id}"
        end
    else

@@ -1,3 +1,5 @@
 <h1><%@patient.doctors.each do |d|%></h1>
-  <%= d.name %>
-  <%end %> 
+  <h1>Patient Name : <%=@patient.name%> </h1>
+  <br>
+  <h1>Doctor Name: <%= d.name %> </h1> 
+  <%end %>
