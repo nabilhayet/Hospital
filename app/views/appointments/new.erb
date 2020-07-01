@@ -1,10 +1,10 @@
-<h1>Hello <%=@patient.name %></h1> 
+<h1>Hello <%=@patient.name %></h1>
 <h1>Create a New appointment From Existing Doctors</h1>
 
 <form action="/appointments" method="POST">
   <h3>Existing Doctors</h3>
   <% @doctor.each do |doc| %>
-    <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>"><%= doc.name %></input><br>
+    <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>"><%= doc.name %></input required><br>
   <% end %>
   <br>
   <br>
