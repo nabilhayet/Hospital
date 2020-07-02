@@ -16,25 +16,18 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.all.select{|apt| apt.time==params[:time] && apt.date==params[:date] && apt.id==@patient.id}
 
     if @patient
-      if !@appointment
-        if !params["patient"]["doctor_ids"].empty?
+      if @appointment.empty?
             @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
-            @apt = Appointment.create(params[:patient][:doctor_ids],session[:patient_id],params[:date],params[:time])
-            # @patient.doctors << @doctor
-            # # @appt = Appointment.last
-            # @appt.date = params[:date]
-            # @appt.time = params[:time]
-            redirect "/appointment/#{@apt.id}"
-          end
-       end
+            @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
+            redirect "/appointments/#{@apt.id}"
+        end
    else
      erb :'/appointments/new'
    end
   end
 
- get '/appointment/:id' do
+ get '/appointments/:id' do
   if ApplicationController.is_logged_in?(session)
-    @patient = Patient.find_by_id(params[:id])
     @apt = Appointment.find_by_id(params[:id])
     erb :'/appointments/show'
   else
