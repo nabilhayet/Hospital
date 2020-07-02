@@ -1,5 +1,10 @@
 <h1><%@patient.doctors.each do |d|%></h1>
   <h1>Patient Name : <%=@patient.name%> </h1>
   <br>
-  <h1>Doctor Name: <%= d.name %> </h1> 
+  <h1>Doctor Name: <%= d.name %> </h1>
+  <br>
+  <h1>Appt time: <%= @apt.time%> </h1>
+  <br>
+  <h1>Appt date: <%= @apt.date%> </h1> 
+
   <%end %>
