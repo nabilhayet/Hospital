@@ -15,7 +15,7 @@ class PatientsController < ApplicationController
       @patient.save
       flash.next[:message] = "Successfully registered."
       session[:patient_id] = @patient.id
-      redirect '/home/patient'
+      redirect '/login/patient'
     end
   end
 
@@ -34,11 +34,12 @@ class PatientsController < ApplicationController
 
   get '/profile/patient' do
     if ApplicationController.is_logged_in?(session)
-      erb :'/patients/new'
+      @patient = ApplicationController.current_user(session)
+        erb :'/patients/new'
     else
       erb :'/patients/home/patient'
     end
-  end 
+  end
 
   get '/sessions/logout' do
     session.clear

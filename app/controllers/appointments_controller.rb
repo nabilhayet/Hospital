@@ -7,7 +7,7 @@ class AppointmentsController < ApplicationController
       @patient = ApplicationController.current_user(session)
       erb :'appointments/new'
     else
-      erb :'/profile/patient'
+      redirect '/profile/patient'
     end
   end
 
@@ -32,6 +32,19 @@ class AppointmentsController < ApplicationController
     erb :'/appointments/show'
   else
     redirect '/appointment'
+  end
+end
+
+get '/view' do
+  if ApplicationController.is_logged_in?(session)
+    @patient = ApplicationController.current_user(session)
+    @apt = Appointment.select{|a| a.patient_id==@patient.id}
+      if @apt
+        erb :'/appointments/view'
+      end
+  else
+    flash.now[:message] = "You have no appointment"
+    redirect 'profile/patient'
   end
 end
 
