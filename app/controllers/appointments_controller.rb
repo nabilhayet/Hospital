@@ -48,4 +48,20 @@ get '/view' do
   end
 end
 
+get '/update' do
+  if ApplicationController.is_logged_in?(session)
+    @patient = ApplicationController.current_user(session)
+    @apt = @patient.appointments
+      if !@apt.empty?
+        erb :'/appointments/update'
+      end
+  else
+      flash.now[:message] = "You have no appointmen to updatet"
+      redirect 'profile/patient'
+  end
 end
+
+get '/appointments/:id/edit' do
+  binding.pry
+end
+end 
