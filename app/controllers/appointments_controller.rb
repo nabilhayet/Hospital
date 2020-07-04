@@ -13,7 +13,7 @@ class AppointmentsController < ApplicationController
 
   post '/appointments' do
     @patient = ApplicationController.current_user(session)
-    @appointment = Appointment.all.select{|apt| apt.time==params[:time] && apt.date==params[:date] && apt.id==@patient.id}
+    @appointment = Appointment.all.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:patient][:doctor_ids])}
 
     if @patient
       if @appointment.empty?
@@ -38,7 +38,7 @@ end
 get '/view' do
   if ApplicationController.is_logged_in?(session)
     @patient = ApplicationController.current_user(session)
-    @apt = Appointment.select{|a| a.patient_id==@patient.id}
+    @apt = @patient.appointments
       if @apt
         erb :'/appointments/view'
       end
@@ -62,6 +62,33 @@ get '/update' do
 end
 
 get '/appointments/:id/edit' do
-  binding.pry
+  if ApplicationController.is_logged_in?(session)
+      @patient = ApplicationController.current_user(session)
+      @apt = Appointment.find_by_id(params[:id])
+    if @apt.patient_id==@patient.id
+       @doctor = Doctor.all
+      erb :'/appointments/edit'
+    else
+      erb :'/patients/new'
+    end
+else
+    redirect 'profile/patient'
+  end
 end
-end 
+
+patch '/appointments/:id' do
+  @patient = ApplicationController.current_user(session)
+  @appointment = Appointment.find_by_id(params[:id])
+  apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:patient][:doctor_ids]
+  if @patient
+    if @appointment.empty?
+          @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
+          @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
+          redirect "/appointments/#{@apt.id}"
+      end
+ else
+   erb :'/appointments/new'
+ end
+end
+
+end
