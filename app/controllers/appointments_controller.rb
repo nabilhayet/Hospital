@@ -78,17 +78,53 @@ end
 
 patch '/appointments/:id' do
   @patient = ApplicationController.current_user(session)
-  @appointment = Appointment.find_by_id(params[:id])
-  apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:patient][:doctor_ids]
-  if @patient
-    if @appointment.empty?
-          @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
-          @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
-          redirect "/appointments/#{@apt.id}"
-      end
+  @apt = Appointment.find_by_id(params[:id])
+  @appointment = Appointment.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
+
+  if @appointment.empty?
+      @apt.doctor_id = params[:doctor_id]
+      @apt.patient_id = @patient.id
+      @apt.time = params[:time]
+      @apt.date = params[:date]
+      @apt.save
+        redirect "/appointments/#{@apt.id}"
+
  else
-   erb :'/appointments/new'
+   flash.now[:message] = "You can not update this appointment"
+   erb :'/appointments/update'
  end
 end
 
+get '/delete' do
+  if ApplicationController.is_logged_in?(session)
+    @patient = ApplicationController.current_user(session)
+    @apt = @patient.appointments
+      if !@apt.empty?
+        erb :'/appointments/remove'
+      end
+  else
+      flash.now[:message] = "You have no appointmen to delete"
+      redirect 'profile/patient'
+  end
+end
+
+get '/appointments/:id/delete' do
+  if ApplicationController.is_logged_in?(session)
+      @patient = ApplicationController.current_user(session)
+      @apt = Appointment.find_by_id(params[:id])
+    if @apt.patient_id==@patient.id
+      erb :'/appointments/delete'
+    else
+      erb :'/patients/new'
+    end
+else
+    redirect 'profile/patient'
+  end
+end
+
+delete '/appointments/:id' do
+  @apt = Appointment.find_by_id(params[:id])
+  @apt.delete
+  redirect '/view'
+end
 end
