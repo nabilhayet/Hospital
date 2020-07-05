@@ -6,16 +6,16 @@ class DoctorsController < ApplicationController
 
   post '/registrationss' do
     @doctor = Doctor.find_by(email: params["email"])
-    if @doctor
-      flash.next[:message] = "Email address already exists."
-      redirect '/registrations/doctor'
-    else
-      @doctor = Doctor.new(name: params["name"], email: params["email"], password: params["password"])
-      @doctor.save
-      flash.next[:message] = "Successfully registered."
-      session[:doctor_id] = @doctor.id
-      redirect '/home/doctor'
-    end
+      if @doctor
+        flash.next[:message] = "Email address already exists."
+        redirect '/registrations/doctor'
+      else
+        @doctor = Doctor.new(name: params["name"], email: params["email"], password: params["password"])
+        @doctor.save
+        flash.next[:message] = "Successfully registered."
+        session[:doctor_id] = @doctor.id
+        redirect '/home/doctor'
+      end
   end
 
   get '/login/doctor' do
@@ -24,22 +24,21 @@ class DoctorsController < ApplicationController
 
   post '/logins' do
     @doctor = Doctor.find_by(email: params[:email])
-    if @doctor && @doctor.authenticate(params[:password])
-      session[:doctor_id] = @doctor.id
-      redirect '/profile/doctor'
-    end
-    redirect '/login/doctor'
+      if @doctor && @doctor.authenticate(params[:password])
+        session[:doctor_id] = @doctor.id
+        redirect '/profile/doctor'
+      end
+        redirect '/login/doctor'
   end
 
   get '/profile/doctor' do
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
-        erb :'/doctors/new'
+      erb :'/doctors/new'
     else
       erb :welcome
     end
   end
-
 
   get '/sessionss/logout' do
     session.clear
@@ -49,7 +48,4 @@ class DoctorsController < ApplicationController
   get '/home/doctor' do
     erb :'/doctors/home/doctor'
   end
-
-
-
 end

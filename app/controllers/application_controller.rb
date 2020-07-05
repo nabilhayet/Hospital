@@ -13,7 +13,6 @@ class ApplicationController < Sinatra::Base
     register Sinatra::Flash
   end
 
-
   get "/" do
     erb :welcome
   end
@@ -26,7 +25,7 @@ class ApplicationController < Sinatra::Base
       @d = Doctor.find_by_id(session[:doctor_id])
       @d
     end
-  end 
+  end
 
   def self.is_logged_in?(session)
     if session.key?("patient_id")
@@ -35,6 +34,4 @@ class ApplicationController < Sinatra::Base
       !!session[:doctor_id]
     end
   end
-
-
 end
