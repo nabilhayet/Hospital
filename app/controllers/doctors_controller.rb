@@ -19,7 +19,7 @@ class DoctorsController < ApplicationController
   end
 
   get '/login/doctor' do
-    erb :'/doctors/login/doctor'
+    erb :'doctors/login/doctor'
   end
 
   post '/logins' do
@@ -37,7 +37,7 @@ class DoctorsController < ApplicationController
   get '/profile/doctor' do
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
-      erb :'/doctors/new'
+      erb :'doctors/new'
     else
       erb :welcome
     end
@@ -49,6 +49,6 @@ class DoctorsController < ApplicationController
   end
 
   get '/home/doctor' do
-    erb :'/doctors/home/doctor'
+    erb :'doctors/home/doctor'
   end
 end

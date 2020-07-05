@@ -40,7 +40,7 @@ class AppointmentsController < ApplicationController
             redirect '/profile/patient'
           end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -55,7 +55,7 @@ class AppointmentsController < ApplicationController
             redirect '/profile/patient'
           end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -70,7 +70,7 @@ class AppointmentsController < ApplicationController
             redirect '/profile/patient'
           end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -86,7 +86,7 @@ class AppointmentsController < ApplicationController
             redirect '/profile/patient'
           end
     else
-     redirect '/welcome'
+     erb :welcome
     end
   end
 
@@ -120,7 +120,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/patient'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -135,7 +135,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/patient'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -158,7 +158,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/doctor'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -173,7 +173,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/doctor'
         end
    else
-     redirect '/welcome'
+     erb :welcome
    end
  end
 
@@ -188,7 +188,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/doctor'
         end
    else
-    redirect '/welcome'
+    erb :welcome
   end
 end
 
@@ -204,7 +204,7 @@ end
           redirect '/profile/doctor'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -237,7 +237,7 @@ end
           redirect '/profile/doctor'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
@@ -252,7 +252,7 @@ end
           redirect '/profile/doctor'
         end
     else
-      redirect '/welcome'
+      erb :welcome
     end
   end
 
