@@ -1,15 +1,15 @@
 <h1>Hello <%=@apt.patient.name%></h1>
-<h1>Update an existing appointment</h1>
-
-<form action="/appointments/<%= @apt.id %>" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="patch">
-    <%@doctor.each do |doc| %>
-    <input type="radio" name="[doctor_id]" id="<%= doc.id %>" value="<%= doc.id %>" <%='checked' if @apt.doctor_id==doc.id%>><%= doc.name %></input><br>
-  <% end %>
-  <br>
-  <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
-  <br>
-  <p>Time:<input type="time" name="time" id="time" value="<%@apt.time%>"></input></p>
-  <br>
- <input type="submit" value="Update appointment">
-</form>
+<p>Update an existing appointment</p>
+<br>
+  <form action="/appointments/<%= @apt.id %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="patch">
+      <%@doctor.each do |doc| %>
+      <input type="radio" name="[doctor_id]" id="<%= doc.id %>" value="<%= doc.id %>" <%='checked' if @apt.doctor_id==doc.id%>><%= doc.name %></input><br>
+      <%end%>
+      <br>
+    <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
+    <br>
+    <p>Time:<input type="time" name="time" id="time" value="<%@apt.time%>"></input></p>
+    <br>
+    <input type="submit" value="Update appointment">
+  </form>

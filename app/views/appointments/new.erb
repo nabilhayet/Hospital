@@ -1,15 +1,15 @@
 <h1>Hello <%=@patient.name %></h1>
-<h1>Create a New appointment From Existing Doctors</h1>
-
-<form action="/appointments" method="POST">
-  <h3>Existing Doctors</h3>
-  <% @doctor.each do |doc| %>
-    <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>" required><%= doc.name %></input><br>
-  <% end %>
-  <br>
-  <p>Date:<input type="date" name="date" id="date" required></p>
-  <br>
-  <p>Time:<input type="time" name="time" id="time" required></p>
-  <br>
- <input type="submit" value="Create appointment">
+<p>Create a New appointment From Existing Doctors</p>
+<br>
+  <form action="/appointments" method="POST">
+    <h3>Existing Doctors</h3>
+      <% @doctor.each do |doc| %>
+      <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>" required><%= doc.name %></input><br>
+      <%end%>
+      <br>
+    <p>Date:<input type="date" name="date" id="date" required></p>
+    <br>
+    <p>Time:<input type="time" name="time" id="time" required></p>
+    <br>
+    <input type="submit" value="Create appointment">
 </form>

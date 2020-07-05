@@ -1,4 +1,5 @@
 <%= flash[:message] %>
+<br> 
 <h1> The appointments are : </h1>
  <%@apt.each do |a| %>
   <h2> Patient Name : <%=a.patient.name %> </h2>
@@ -9,4 +10,4 @@
   <br>
   <h2>Appointment Date : <%=a.date%> </h2>
   <a href="/appointmentss/<%=a.id%>/edit">Update</a>
-  <% end %>
+<%end%>
