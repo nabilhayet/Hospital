@@ -27,8 +27,11 @@ class DoctorsController < ApplicationController
       if @doctor && @doctor.authenticate(params[:password])
         session[:doctor_id] = @doctor.id
         redirect '/profile/doctor'
-      end
+      else
+        flash.next[:message] = "Wrong email or password!"
         redirect '/login/doctor'
+      end
+
   end
 
   get '/profile/doctor' do
