@@ -154,6 +154,7 @@ class AppointmentsController < ApplicationController
         if @doctor.id == @apt.id
           erb :'appointments/shows'
         else
+          flash.next[:message] = "You don't have permission to view this!"
           redirect '/profile/doctor'
         end
     else
@@ -167,10 +168,12 @@ class AppointmentsController < ApplicationController
       @apt = @doctor.appointments
         if @apt
           erb :'appointments/views'
+        else
+          flash.next[:message] = "You have no appointment to view"
+          redirect '/profile/doctor'
         end
    else
-     flash.now[:message] = "You have no appointment"
-     redirect '/profile/doctor'
+     redirect '/welcome'
    end
  end
 
@@ -180,10 +183,12 @@ class AppointmentsController < ApplicationController
      @apt = @doctor.appointments
         if !@apt.empty?
           erb :'appointments/updates'
+        else
+          flash.next[:message] = "You have no appointment to update"
+          redirect '/profile/doctor'
         end
    else
-      flash.now[:message] = "You have no appointmen to updatet"
-      redirect '/profile/doctor'
+    redirect '/welcome'
   end
 end
 
@@ -192,13 +197,14 @@ end
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
         if @apt.doctor_id==@doctor.id
-          @doctor = Doctor.all
-          erb :'appointments/edits'
+           @doctor = Doctor.all
+           erb :'appointments/edits'
         else
-          erb :'doctors/new'
+          flash.next[:message] = "You have no appointment to update of this number"
+          redirect '/profile/doctor'
         end
     else
-    redirect '/profile/doctor'
+      redirect '/welcome'
     end
   end
 
@@ -212,11 +218,12 @@ end
         @apt.time = params[:time]
         @apt.date = params[:date]
         @apt.save
+        flash.next[:message] = "Appointment was updated Successfully!"
         redirect "/appointmentss/#{@apt.id}"
       else
         flash.now[:message] = "You can not update this appointment"
         erb :'appointments/updates'
-        end
+      end
   end
 
   get '/delete/doctor' do
@@ -225,10 +232,12 @@ end
       @apt = @doctor.appointments
         if !@apt.empty?
           erb :'appointments/removes'
+        else
+          flash.next[:message] = "You have no appointment to delete"
+          redirect '/profile/doctor'
         end
     else
-      flash.now[:message] = "You have no appointmen to delete"
-      redirect '/profile/doctor'
+      redirect '/welcome'
     end
   end
 
@@ -239,20 +248,17 @@ end
         if @apt.doctor_id == @doctor.id
           erb :'appointments/deletes'
         else
-          erb :'doctors/new'
+          flash.next[:message] = "You have no appointment to delete"
+          redirect '/profile/doctor'
         end
     else
-      redirect '/profile/doctor'
+      redirect '/welcome'
     end
   end
 
   delete '/appointmentss/:id' do
     @apt = Appointment.find_by_id(params[:id])
-    if @apt
-      @apt.delete
-      erb :'doctors/new'
-    else
-      redirect '/profile/doctor'
-    end
+    @apt.delete
+    flash.next[:message] = "Appointment was deleted Successfully!"
+    redirect '/views'
   end
-end
