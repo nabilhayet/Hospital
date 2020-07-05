@@ -37,13 +37,13 @@ class PatientsController < ApplicationController
       @patient = ApplicationController.current_user(session)
         erb :'/patients/new'
     else
-      erb :'/patients/home/patient'
+      erb :welcome
     end
   end
 
   get '/sessions/logout' do
     session.clear
-    erb :'/patients/home/patient'
+    erb :welcome
   end
 
   get '/home/patient' do

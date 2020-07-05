@@ -1,0 +1,12 @@
+<h1>Hello <%=@apt.doctor.name%></h1>
+<h1>Update an existing appointment</h1>
+
+<form action="/appointmentss/<%= @apt.id %>" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <br>
+  <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
+  <br>
+  <p>Time:<input type="time" name="time" id="time" value="<%@apt.time%>"></input></p>
+  <br>
+ <input type="submit" value="Update appointment">
+</form>

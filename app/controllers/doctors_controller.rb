@@ -32,12 +32,18 @@ class DoctorsController < ApplicationController
   end
 
   get '/profile/doctor' do
-    erb :'/doctors/show'
+    if ApplicationController.is_logged_in?(session)
+      @doctor = ApplicationController.current_user(session)
+        erb :'/doctors/new'
+    else
+      erb :welcome
+    end
   end
+
 
   get '/sessionss/logout' do
     session.clear
-    erb :'/doctors/home/doctor'
+    erb :welcome
   end
 
   get '/home/doctor' do

@@ -1,7 +1,5 @@
 class AppointmentsController < ApplicationController
-
-
-  get '/appointment' do
+ get '/appointment' do
     @doctor = Doctor.all
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
@@ -28,10 +26,15 @@ class AppointmentsController < ApplicationController
 
  get '/appointments/:id' do
   if ApplicationController.is_logged_in?(session)
+    @patient = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
-    erb :'/appointments/show'
+    if @patient.id == @apt.id
+      erb :'/appointments/show'
+   else
+    redirect '/profile/patient'
+   end
   else
-    redirect '/appointment'
+    redirect '/welcome'
   end
 end
 
@@ -126,5 +129,120 @@ delete '/appointments/:id' do
   @apt = Appointment.find_by_id(params[:id])
   @apt.delete
   redirect '/view'
+end
+
+get '/appointmentss/:id' do
+ if ApplicationController.is_logged_in?(session)
+   @doctor = ApplicationController.current_user(session)
+   @apt = Appointment.find_by_id(params[:id])
+
+   if @doctor.id == @apt.id
+     erb :'appointments/shows'
+  else
+   redirect '/profile/doctor'
+  end
+
+ else
+   redirect '/welcome'
+ end
+end
+
+
+
+
+get '/view/doctor' do
+  if ApplicationController.is_logged_in?(session)
+    @doctor = ApplicationController.current_user(session)
+    @apt = @doctor.appointments
+      if @apt
+        erb :'appointments/views'
+      end
+  else
+    flash.now[:message] = "You have no appointment"
+    redirect 'profile/doctor'
+  end
+end
+
+get '/update/doctor' do
+  if ApplicationController.is_logged_in?(session)
+    @doctor = ApplicationController.current_user(session)
+    @apt = @doctor.appointments
+      if !@apt.empty?
+        erb :'appointments/updates'
+      end
+  else
+      flash.now[:message] = "You have no appointmen to updatet"
+      redirect 'profile/doctor'
+  end
+end
+
+get '/appointmentss/:id/edit' do
+  if ApplicationController.is_logged_in?(session)
+      @doctor = ApplicationController.current_user(session)
+      @apt = Appointment.find_by_id(params[:id])
+    if @apt.doctor_id==@doctor.id
+       @doctor = Doctor.all
+      erb :'appointments/edits'
+    else
+      erb :'doctors/new'
+    end
+else
+    redirect 'profile/doctor'
+  end
+end
+
+patch '/appointmentss/:id' do
+  @doctor = ApplicationController.current_user(session)
+  @apt = Appointment.find_by_id(params[:id])
+  @patient = @apt.patient
+  @appointment = Appointment.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
+
+  if @appointment.empty?
+      @apt.time = params[:time]
+      @apt.date = params[:date]
+      @apt.save
+        redirect "/appointmentss/#{@apt.id}"
+
+ else
+   flash.now[:message] = "You can not update this appointment"
+   erb :'appointments/updates'
+ end
+end
+
+get '/delete/doctor' do
+  if ApplicationController.is_logged_in?(session)
+    @doctor = ApplicationController.current_user(session)
+    @apt = @doctor.appointments
+      if !@apt.empty?
+        erb :'appointments/removes'
+      end
+  else
+      flash.now[:message] = "You have no appointmen to delete"
+      redirect '/profile/doctor'
+  end
+end
+
+get '/appointmentss/:id/delete' do
+  if ApplicationController.is_logged_in?(session)
+      @doctor = ApplicationController.current_user(session)
+      @apt = Appointment.find_by_id(params[:id])
+    if @apt.doctor_id == @doctor.id
+      erb :'appointments/deletes'
+    else
+      erb :'doctors/new'
+    end
+else
+    redirect '/profile/doctor'
+  end
+end
+
+delete '/appointmentss/:id' do
+  @apt = Appointment.find_by_id(params[:id])
+  if @apt
+    @apt.delete
+    erb :'doctors/new'
+  else
+
+  end
 end
 end
