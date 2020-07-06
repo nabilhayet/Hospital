@@ -33,10 +33,10 @@ class AppointmentsController < ApplicationController
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = Appointment.find_by_id(params[:id])
-          if @patient.id == @apt.patient_id
-            erb :'appointments/show'
+          if @apt!=nil && @patient.id == @apt.patient_id
+              erb :'appointments/show'
           else
-            flash.next[:message] = "You have no appointment of this number"
+            flash.next[:message] = "No such appointment exists!"
             redirect '/profile/patient'
           end
     else
@@ -78,9 +78,9 @@ class AppointmentsController < ApplicationController
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = Appointment.find_by_id(params[:id])
-          if @apt.patient_id == @patient.id
-            @doctor = Doctor.all
-            erb :'appointments/edit'
+          if @apt!=nil && @apt.patient_id == @patient.id
+             @doctor = Doctor.all
+             erb :'appointments/edit'
           else
             flash.next[:message] = "You have no appointment to update of this number"
             redirect '/profile/patient'
@@ -128,8 +128,8 @@ class AppointmentsController < ApplicationController
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
-        if @apt.patient_id == @patient.id
-          erb :'appointments/delete'
+        if @apt!=nil && @apt.patient_id == @patient.id
+           erb :'appointments/delete'
         else
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/patient'
@@ -151,7 +151,7 @@ class AppointmentsController < ApplicationController
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
 
-        if @doctor.id == @apt.doctor_id
+        if @apt!=nil && @doctor.id == @apt.doctor_id
           erb :'appointments/shows'
         else
           flash.next[:message] = "You don't have permission to view this!"
@@ -196,7 +196,7 @@ end
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
-        if @apt.doctor_id==@doctor.id
+        if @apt!=nil && @apt.doctor_id==@doctor.id
            @doctor = Doctor.all
            erb :'appointments/edits'
         else
@@ -245,7 +245,7 @@ end
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
-        if @apt.doctor_id == @doctor.id
+        if @apt!=nil && @apt.doctor_id == @doctor.id
           erb :'appointments/deletes'
         else
           flash.next[:message] = "You have no appointment to delete"
