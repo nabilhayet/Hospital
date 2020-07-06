@@ -9,7 +9,7 @@
       <br>
     <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
     <br>
-    <p>Time:<input type="time" name="time" id="time" value="<%@apt.time%>"></input></p>
+    <p>Time:<input type="time" name="time" id="time" value="<%=@apt.time.strftime("%H:%M")%>"></input></p>
     <br>
     <input type="submit" value="Update appointment">
   </form>
