@@ -12,7 +12,7 @@ class AppointmentsController < ApplicationController
 
   post '/appointments' do
     @patient = ApplicationController.current_user(session)
-    @appointment = Appointment.all.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:patient][:doctor_ids])}
+    @appointment = Appointment.all.select{|apt| (apt.time == params[:time] && apt.date == params[:date]) && (apt.patient.id == @patient.id || apt.doctor.id == params[:patient][:doctor_ids])}
 
       if @patient
         if @appointment.empty?
