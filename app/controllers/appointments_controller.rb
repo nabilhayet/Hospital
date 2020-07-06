@@ -94,7 +94,7 @@ class AppointmentsController < ApplicationController
   patch '/appointments/:id' do
     @patient = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
-    @appointment = Appointment.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
+    @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
 
       if @appointment.empty?
         @apt.doctor_id = params[:doctor_id]
@@ -213,7 +213,7 @@ end
     @doctor = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
     @patient = @apt.patient
-    @appointment = Appointment.select{|apt| apt.time==params[:time] && apt.date==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
+    @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
 
       if @appointment.empty?
         @apt.time = params[:time]
