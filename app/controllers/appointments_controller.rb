@@ -260,6 +260,6 @@ end
     @apt = Appointment.find_by_id(params[:id])
     @apt.delete
     flash.next[:message] = "Appointment was deleted Successfully!"
-    redirect '/views'
+    redirect '/view/doctor'
   end
 end
