@@ -1,13 +1,33 @@
-<%=flash[:message]%>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/stylesheets/hos.css">
+        <title>Health Service</title>
+        <br>
+        <%=flash[:message]%>
+        <br>
+        <img src="images/hos.jpg">
+    </head>
+<body> 
 <br>
 <br>
   <h4>Please sign up or log in to access your account</h4>
   <br>
   <br>
-  <a href="/registrations/patient" class="btn">Sign Up</a>
+  <header>
+    <div class="main">
+      <ul>
+  <li> <a href="/registrations/patient">Sign Up</a></li> 
   <br>
   <br>
-  <a href="/login/patient" class="btn">Login</a>
+  <li> <a href="/login/patient" class="btn">Login</a></li> 
   <br>
   <br>
-  <a href="/sessions/logout" class="btn">logout</a>
+  <li> <a href="/sessions/logout" class="btn">logout</a> </li> 
+</ul>
+</div>
+</header>
+</body>
+</html>
+
+  
