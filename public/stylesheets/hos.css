@@ -3,7 +3,9 @@ header {
   background-position: center;
 }
 
-
+.img-hos {
+  width: 700px;
+}
 
 ul {
   float:inherit;
