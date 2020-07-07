@@ -45,7 +45,7 @@ class PatientsController < ApplicationController
 
   get '/sessions/logout' do
     session.clear
-    erb :welcome
+    redirect '/'
   end
 
   get '/home/patient' do

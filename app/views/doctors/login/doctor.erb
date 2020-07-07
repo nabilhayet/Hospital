@@ -1,7 +1,24 @@
-<%= flash[:message] %>
-<h1>Log In Below:</h1>
-  <form method="POST" action="/logins">
-    <p>Email:<input type="text" name="email" id="email" required></p>
-    <p>Password:<input type="password" name="password" id="password" required></p>
-    <input type="submit" id="Log In">
-  </form>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/hos.css">
+    <title>Health Service</title>
+    <br>
+    <br>
+    <%=flash[:message]%>
+    <br>
+    <img class="img-hos" src="../images/hospital-2.jpg">
+</head>
+  <body>
+    <header>
+      <div class="main">
+        <h1>Log In Below:</h1>
+        <form method="POST" action="/logins">
+          <p>Email:<input type="text" name="email" id="email" required></p>
+          <p>Password:<input type="password" name="password" id="password" required></p>
+          <input type="submit" id="Log In">
+        </form>
+      </div>
+    </header>
+  </body>
+</html>

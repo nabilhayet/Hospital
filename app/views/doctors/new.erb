@@ -1,15 +1,30 @@
-<h2>Welcome <%=@doctor.name%> to Your Profile!</h2>
-<br>
-  <%=flash[:message]%>
-  <br>
-  <br>
-  <a href="/view/doctor">View all Appointments</a>
-  <br>
-  <br>
-  <a href="/update/doctor">Update an Appointment</a>
-  <br>
-  <br>
-  <a href="/delete/doctor">Delete an Appointment</a>
-  <br>
-  <br>
-  <a href="/sessions/logout">Logout</a>
+  <html>
+      <head>
+          <meta charset="UTF-8">
+          <link rel="stylesheet" href="/stylesheets/hos.css">
+          <title>Health Service</title>
+          <h2>Welcome <%=@doctor.name%> to Your Profile!</h2>
+          <br>
+          <%=flash[:message]%>
+          <br>
+          <img class="img-hos" src="../images/hospital-2.jpg">
+      </head>
+  <body>
+    <header>
+      <div class="main">
+        <ul>
+          <li> <a href="/view/doctor">View all Appointments</a> </li>
+          <br>
+          <br>
+          <li> <a href="/update/doctor">Update an Appointment</a> </li>
+          <br>
+          <br>
+          <li> <a href="/delete/doctor">Delete an Appointment</a> </li>
+          <br>
+          <br>
+          <li> <a href="/sessionss/logout">Logout</a> </li>
+        </ul>
+      </div>
+    </header>
+  </body>
+  </html>
