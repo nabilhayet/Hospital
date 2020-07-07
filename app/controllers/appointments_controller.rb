@@ -94,9 +94,9 @@ class AppointmentsController < ApplicationController
   patch '/appointments/:id' do
     @patient = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
-    @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
+    @appointment = Appointment.find{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
 
-      if @appointment.empty?
+      if !@appointment
         @apt.doctor_id = params[:doctor_id]
         @apt.patient_id = @patient.id
         @apt.time = params[:time]
@@ -105,8 +105,8 @@ class AppointmentsController < ApplicationController
         flash.next[:message] = "Appointment was updated Successfully"
         redirect "/appointments/#{@apt.id}"
       else
-        flash.now[:message] = "You can not update this appointment!"
-        erb :'appointments/update'
+        flash.next[:message] = "You can not update this appointment!"
+        redirect '/profile/patient'
       end
   end
 
