@@ -1,33 +1,22 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="/stylesheets/hos.css">
-        <title>Health Service</title>
-        <br>
-        <%=flash[:message]%>
-        <br>
-        <img src="images/hos.jpg">
-    </head>
-<body> 
-<br>
-<br>
-  <h4>Please sign up or log in to access your account</h4>
-  <br>
-  <br>
-  <header>
-    <div class="main">
-      <ul>
-  <li> <a href="/registrations/patient">Sign Up</a></li> 
-  <br>
-  <br>
-  <li> <a href="/login/patient" class="btn">Login</a></li> 
-  <br>
-  <br>
-  <li> <a href="/sessions/logout" class="btn">logout</a> </li> 
-</ul>
-</div>
-</header>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/hos.css">
+    <title>Health Service</title>
+    <h4>Please sign up or log in to access your account</h4>
+    <img src="images/hospital-2.jpg">
+    <br>
+    <%=flash[:message]%>
+  </head>
+    <body>
+      <header>
+        <div class="main">
+          <ul>
+            <li> <a href="/registrations/patient">Sign Up</a></li>
+            <li> <a href="/login/patient" class="btn">Login</a></li>
+            <li> <a href="/sessions/logout" class="btn">logout</a> </li>
+          </ul>
+        </div>
+      </header>
+    </body>
 </html>
-
-  

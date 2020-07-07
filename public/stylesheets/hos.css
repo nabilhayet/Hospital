@@ -1,13 +1,9 @@
 header {
-  background-image: url(images/hospital-2.jpg)
   background-size: cover;
   background-position: center;
 }
 
-.main {
-  background-image: url(images/hospital-2.jpg)
 
-}
 
 ul {
   float:inherit;

@@ -21,9 +21,6 @@
 
   .wrapper {
     background: wheat;
-  
-    background-size: cover;
-    background-repeat: no-repeat;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.3);
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.3);
     box-shadow: 0 0 10px rgba(0,0,0,.3);
