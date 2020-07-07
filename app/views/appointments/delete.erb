@@ -1,6 +1,22 @@
-<h1>Are you sure that you want to delete this appointment?</h1>
-<br>
-  <form action="/appointments/<%= @apt.id %>" method="post">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <input type="submit" value="delete">
-  </form>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/stylesheets/hos.css">
+      <title>Health Service</title>
+      <h1>Are you sure that you want to delete this appointment?</h1>
+      <br>
+      <br>
+      <img class="img-hos" src="/images/hospital-2.jpg">
+      <br>
+    </head>
+    <body>
+      <header>
+        <div class="main">
+          <form action="/appointments/<%= @apt.id %>" method="post">
+            <input id="hidden" type="hidden" name="_method" value="delete">
+            <input type="submit" value="delete">
+          </form>
+        </div>
+      </header>
+    </body>
+</html>

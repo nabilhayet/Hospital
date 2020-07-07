@@ -1,15 +1,29 @@
-<h1>Hello <%=@patient.name %></h1>
-<p>Create a New appointment From Existing Doctors</p>
-<br>
-  <form action="/appointments" method="POST">
-    <h3>Existing Doctors</h3>
-      <% @doctor.each do |doc| %>
-      <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>" required><%= doc.name %></input><br>
-      <%end%>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/stylesheets/hos.css">
+      <title>Health Service</title>
+      <h1>Hello <%=@patient.name %></h1>
+      <p>Create a New appointment From Existing Doctors</p>
       <br>
-    <p>Date:<input type="date" name="date" id="date" required></p>
-    <br>
-    <p>Time:<input type="time" name="time" id="time" min="09:00" max="17:00" required></p>
-    <br>
-    <input type="submit" value="Create appointment">
-</form>
+      <img class="img-hos" src="../images/hospital-2.jpg">
+    </head>
+      <body>
+        <header>
+          <div class="main">
+            <form action="/appointments" method="POST">
+              <h3>Existing Doctors</h3>
+              <% @doctor.each do |doc| %>
+              <input type="radio" name="patient[doctor_ids]" id="<%= doc.id %>" value="<%= doc.id %>" required><%= doc.name %></input><br>
+              <%end%>
+              <br>
+              <p>Date:<input type="date" name="date" id="date" required></p>
+              <br>
+              <p>Time:<input type="time" name="time" id="time" min="09:00" max="17:00" required></p>
+              <br>
+              <input type="submit" value="Create appointment">
+            </form>
+          </div>
+        </header>
+      </body>
+</html>

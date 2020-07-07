@@ -1,14 +1,31 @@
-<%=flash[:message]%>
-<h1> The appointments are : </h1>
-<br>
- <%@apt.each do |a| %>
-  <h2> Patient Name : <%=a.patient.name %> </h2>
-  <br>
-  <h2> Doctor Name : <%=a.doctor.name %> </h2>
-  <br>
-  <h2> Appointment Time : <%=a.time.strftime("%H:%M %p")%> </h2>
-  <br>
-  <h2>Appointment Date : <%=a.date%> </h2>
-  <br>
-  <br>
-<%end%>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/stylesheets/hos.css">
+      <title>Health Service</title>
+      <br>
+      <%=flash[:message]%>
+      <br>
+      <img class="img-hos" src="../images/hospital-2.jpg">
+      <br>
+    </head>
+    <body>
+      <header>
+        <div class="main">
+          <h1> The appointments are : </h1>
+          <br>
+           <%@apt.each do |a| %>
+            <h2> Patient Name : <%=a.patient.name %> </h2>
+            <br>
+            <h2> Doctor Name : <%=a.doctor.name %> </h2>
+            <br>
+            <h2> Appointment Time : <%=a.time.strftime("%H:%M %p")%> </h2>
+            <br>
+            <h2>Appointment Date : <%=a.date%> </h2>
+            <br>
+            <br>
+          <%end%>
+        </div>
+      </header>
+    </body>
+    </html>

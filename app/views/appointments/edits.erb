@@ -1,12 +1,27 @@
-<h1>Hello <%=@apt.doctor.name%></h1>
-<p>Update an existing appointment</p>
-<br>
-  <form action="/appointmentss/<%= @apt.id %>" method="POST">
-    <input id="hidden" type="hidden" name="_method" value="patch">
-    <br>
-    <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
-    <br>
-    <p>Time:<input type="time" name="time" id="time" min="09:00" max="17:00" value="<%@apt.time.strftime("%H:%M")%>"></input></p>
-    <br>
-    <input type="submit" value="Update appointment">
-  </form>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/stylesheets/hos.css">
+      <title>Health Service</title>
+      <h1>Hello <%=@apt.doctor.name%></h1>
+      <p>Update an existing appointment</p>
+      <br>
+      <img class="img-hos" src="/images/hospital-2.jpg">
+      <br>
+    </head>
+      <body>
+        <header>
+          <div class="main">
+            <form action="/appointmentss/<%= @apt.id %>" method="POST">
+              <input id="hidden" type="hidden" name="_method" value="patch">
+              <br>
+              <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>
+              <br>
+              <p>Time:<input type="time" name="time" id="time" value="<%=@apt.time.strftime("%H:%M %p")%>"></input></p>
+              <br>
+              <input type="submit" value="Update appointment">
+            </form>
+          </div>
+        </header>
+      </body>
+  </html>
