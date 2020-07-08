@@ -195,7 +195,7 @@ class AppointmentsController < ApplicationController
 end
 
   get '/appointmentss/:id/edit' do
-    binding.pry
+   if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
@@ -209,6 +209,9 @@ end
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   patch '/appointmentss/:id' do
