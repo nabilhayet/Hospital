@@ -50,7 +50,7 @@ class AppointmentsController < ApplicationController
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
           if !@apt.empty?
-            erb :'appointments/patient/view'
+            erb :'appointments/patient/index'
           else
             flash.next[:message] = "You have no appointment to view"
             redirect '/profile/patient'
@@ -169,7 +169,7 @@ class AppointmentsController < ApplicationController
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
         if !@apt.empty?
-          erb :'appointments/doctor/view'
+          erb :'appointments/doctor/index'
         else
           flash.next[:message] = "You have no appointment to view"
           redirect '/profile/doctor'
