@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
     @doctor = Doctor.all
       if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
-        erb :'appointments/new'
+        erb :'appointments/patient/new'
       else
         redirect '/profile/patient'
       end
@@ -26,7 +26,7 @@ class AppointmentsController < ApplicationController
           redirect '/profile/patient'
         end
       else
-        erb :'welcome'
+        redirect '/'
       end
   end
 
@@ -35,13 +35,13 @@ class AppointmentsController < ApplicationController
         @patient = ApplicationController.current_user(session)
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @patient.id == @apt.patient_id
-              erb :'appointments/show'
+              erb :'appointments/patient/show'
           else
             flash.next[:message] = "No such appointment exists!"
             redirect '/profile/patient'
           end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -50,13 +50,13 @@ class AppointmentsController < ApplicationController
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
           if !@apt.empty?
-            erb :'appointments/view'
+            erb :'appointments/patient/view'
           else
             flash.next[:message] = "You have no appointment to view"
             redirect '/profile/patient'
           end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -65,13 +65,13 @@ class AppointmentsController < ApplicationController
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
           if !@apt.empty?
-            erb :'appointments/update'
+            erb :'appointments/patient/update'
           else
             flash.next[:message] = "You have no appointment to update"
             redirect '/profile/patient'
           end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -81,13 +81,13 @@ class AppointmentsController < ApplicationController
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @apt.patient_id == @patient.id
              @doctor = Doctor.all
-             erb :'appointments/edit'
+             erb :'appointments/patient/edit'
           else
             flash.next[:message] = "You have no appointment to update of this number"
             redirect '/profile/patient'
           end
     else
-     erb :welcome
+     redirect '/'
     end
   end
 
@@ -115,13 +115,13 @@ class AppointmentsController < ApplicationController
       @patient = ApplicationController.current_user(session)
       @apt = @patient.appointments
         if !@apt.empty?
-          erb :'appointments/remove'
+          erb :'appointments/patient/remove'
         else
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/patient'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -130,13 +130,13 @@ class AppointmentsController < ApplicationController
       @patient = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.patient_id == @patient.id
-           erb :'appointments/delete'
+           erb :'appointments/patient/delete'
         else
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/patient'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -153,13 +153,13 @@ class AppointmentsController < ApplicationController
       @apt = Appointment.find_by_id(params[:id])
 
         if @apt!=nil && @doctor.id == @apt.doctor_id
-          erb :'appointments/shows'
+          erb :'appointments/doctor/shows'
         else
           flash.next[:message] = "You don't have permission to view this!"
           redirect '/profile/doctor'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -169,13 +169,13 @@ class AppointmentsController < ApplicationController
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
         if !@apt.empty?
-          erb :'appointments/views'
+          erb :'appointments/doctor/views'
         else
           flash.next[:message] = "You have no appointment to view"
           redirect '/profile/doctor'
         end
    else
-     erb :welcome
+     redirect '/'
    end
  end
 
@@ -184,13 +184,13 @@ class AppointmentsController < ApplicationController
      @doctor = ApplicationController.current_user(session)
      @apt = @doctor.appointments
         if !@apt.empty?
-          erb :'appointments/updates'
+          erb :'appointments/doctor/updates'
         else
           flash.next[:message] = "You have no appointment to update"
           redirect '/profile/doctor'
         end
    else
-    erb :welcome
+    redirect '/'
   end
 end
 
@@ -200,13 +200,13 @@ end
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id==@doctor.id
            @doctor = Doctor.all
-           erb :'appointments/edits'
+           erb :'appointments/doctor/edits'
         else
           flash.next[:message] = "You have no appointment to update of this number"
           redirect '/profile/doctor'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -224,7 +224,7 @@ end
         redirect "/appointmentss/#{@apt.id}"
       else
         flash.now[:message] = "You can not update this appointment"
-        erb :'appointments/updates'
+        erb :'appointments/doctor/updates'
       end
   end
 
@@ -233,13 +233,13 @@ end
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
         if !@apt.empty?
-          erb :'appointments/removes'
+          erb :'appointments/doctor/removes'
         else
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/doctor'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
@@ -248,13 +248,13 @@ end
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id == @doctor.id
-          erb :'appointments/deletes'
+          erb :'appointments/doctor/deletes'
         else
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/doctor'
         end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
