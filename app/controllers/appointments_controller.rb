@@ -165,7 +165,6 @@ class AppointmentsController < ApplicationController
 
   get '/view/doctor' do
     if ApplicationController.is_logged_in?(session)
-
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
         if !@apt.empty?
