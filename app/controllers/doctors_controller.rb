@@ -37,7 +37,7 @@ class DoctorsController < ApplicationController
   get '/profile/doctor' do
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
-      erb :'doctors/new'
+      erb :'doctors/profile'
     else
       erb :welcome
     end
