@@ -111,6 +111,7 @@ class AppointmentsController < ApplicationController
   end
 
   get '/delete' do
+    ApplicationController.session_clear_doctor(session)
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
       @apt = @patient.appointments
@@ -194,6 +195,7 @@ class AppointmentsController < ApplicationController
 end
 
   get '/appointmentss/:id/edit' do
+    binding.pry
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])

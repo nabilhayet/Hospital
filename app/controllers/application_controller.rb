@@ -43,4 +43,8 @@ class ApplicationController < Sinatra::Base
     session[:doctor_id] = nil
   end
 
+  def self.current_user_type
+    self.current_user(session).class.name 
+  end
+
 end
