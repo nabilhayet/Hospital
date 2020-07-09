@@ -35,16 +35,8 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  def self.session_clear_patient(session)
-    session[:patient_id] = nil
-  end
-
-  def self.session_clear_doctor(session)
-    session[:doctor_id] = nil
-  end
-
   def self.current_user_type
-    self.current_user(session).class.name 
+    self.current_user(session).class.name
   end
 
 end

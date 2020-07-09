@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
 
   get '/appointment' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     @doctor = Doctor.all
       if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
@@ -8,6 +9,9 @@ class AppointmentsController < ApplicationController
       else
         redirect '/profile/patient'
       end
+    else
+      redirect '/'
+    end
   end
 
   post '/appointments' do
@@ -31,6 +35,7 @@ class AppointmentsController < ApplicationController
   end
 
   get '/appointments/:id' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = Appointment.find_by_id(params[:id])
@@ -43,9 +48,13 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   get '/view' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
@@ -58,9 +67,13 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   get '/update' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
@@ -73,9 +86,13 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   get '/appointments/:id/edit' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = Appointment.find_by_id(params[:id])
@@ -89,6 +106,9 @@ class AppointmentsController < ApplicationController
     else
      redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   patch '/appointments/:id' do
@@ -111,7 +131,7 @@ class AppointmentsController < ApplicationController
   end
 
   get '/delete' do
-    ApplicationController.session_clear_doctor(session)
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
       @apt = @patient.appointments
@@ -124,9 +144,13 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   get '/appointments/:id/delete' do
+   if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
@@ -139,6 +163,9 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   delete '/appointments/:id' do
@@ -149,6 +176,7 @@ class AppointmentsController < ApplicationController
   end
 
   get '/appointmentss/:id' do
+   if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
@@ -162,9 +190,13 @@ class AppointmentsController < ApplicationController
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   get '/view/doctor' do
+   if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
@@ -177,9 +209,13 @@ class AppointmentsController < ApplicationController
    else
      redirect '/'
    end
+ else
+   redirect '/'
+ end
  end
 
  get '/update/doctor' do
+  if ApplicationController.current_user(session).class.name != "Patient"
    if ApplicationController.is_logged_in?(session)
      @doctor = ApplicationController.current_user(session)
      @apt = @doctor.appointments
@@ -192,6 +228,9 @@ class AppointmentsController < ApplicationController
    else
     redirect '/'
   end
+ else
+  redirect '/'
+ end
 end
 
   get '/appointmentss/:id/edit' do
@@ -233,7 +272,8 @@ end
   end
 
   get '/delete/doctor' do
-    if ApplicationController.is_logged_in?(session)
+    if ApplicationController.current_user(session).class.name != "Patient"
+     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = @doctor.appointments
         if !@apt.empty?
@@ -245,9 +285,13 @@ end
     else
       redirect '/'
     end
+  else
+    redirect '/'
   end
+ end
 
   get '/appointmentss/:id/delete' do
+   if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
       @apt = Appointment.find_by_id(params[:id])
@@ -260,6 +304,9 @@ end
     else
       redirect '/'
     end
+  else
+    redirect '/'
+  end
   end
 
   delete '/appointmentss/:id' do
