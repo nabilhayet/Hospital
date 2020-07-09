@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
         redirect '/profile/patient'
       end
     else
-      redirect '/'
+      redirect 'profile/doctor'
     end
   end
 
@@ -49,7 +49,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -68,7 +68,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -87,7 +87,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -107,7 +107,7 @@ class AppointmentsController < ApplicationController
      redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -145,7 +145,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -164,7 +164,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/doctor'
   end
   end
 
@@ -191,7 +191,7 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/patient'
   end
   end
 
@@ -210,7 +210,7 @@ class AppointmentsController < ApplicationController
      redirect '/'
    end
  else
-   redirect '/'
+   redirect 'profile/patient'
  end
  end
 
@@ -229,7 +229,7 @@ class AppointmentsController < ApplicationController
     redirect '/'
   end
  else
-  redirect '/'
+  redirect 'profile/patient'
  end
 end
 
@@ -249,7 +249,7 @@ end
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/patient'
   end
   end
 
@@ -286,7 +286,7 @@ end
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/patient'
   end
  end
 
@@ -305,7 +305,7 @@ end
       redirect '/'
     end
   else
-    redirect '/'
+    redirect 'profile/patient'
   end
   end
 
