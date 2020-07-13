@@ -38,5 +38,11 @@ class ApplicationController < Sinatra::Base
   def self.current_user_type
     self.current_user(session).class.name
   end
+private
 
+def redirect_if_not_logged_in
+   if !self.class.is_logged_in?(session)
+     redirect '/'
+   end
+end
 end

@@ -11,10 +11,13 @@ class PatientsController < ApplicationController
         redirect '/registrations/patient'
       else
         @patient = Patient.new(name: params["name"], email: params["email"], password: params["password"])
-        @patient.save
-        flash.next[:message] = "Successfully registered."
-        session[:patient_id] = @patient.id
-        redirect '/login/patient'
+          if @patient.save
+            flash.next[:message] = "Successfully registered."
+            session[:patient_id] = @patient.id
+            redirect '/login/patient'
+          else
+            flash.next[:message] = "Please fill out form correctly!"
+            redirect 'registrations/patient'
       end
   end
 
@@ -31,8 +34,7 @@ class PatientsController < ApplicationController
         flash.next[:message] = "Wrong email or password!"
         redirect '/login/patient'
       end
-
-  end
+    end
 
   get '/profile/patient' do
     if ApplicationController.is_logged_in?(session)
