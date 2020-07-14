@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
 
-  get '/appointment' do
+  get '/patient/appointment' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     @doctor = Doctor.all
       if ApplicationController.is_logged_in?(session)
@@ -14,7 +14,7 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  post '/appointments' do
+  post '/patient/appointments' do
     @patient = ApplicationController.current_user(session)
     @appointment = Appointment.all.select do |apt|
       (apt.time.strftime("%H:%M") == params[:time] && apt.date.to_s == params[:date]) && (apt.patient.id == @patient.id || apt.doctor.id == params[:patient][:doctor_ids])
@@ -210,7 +210,7 @@ class AppointmentsController < ApplicationController
   end
   end
 
-  get '/view/doctor' do
+  get '/doctor/view' do
    if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
@@ -229,7 +229,7 @@ class AppointmentsController < ApplicationController
  end
  end
 
- get '/update/doctor' do
+ get '/doctor/update' do
   if ApplicationController.current_user(session).class.name != "Patient"
    if ApplicationController.is_logged_in?(session)
      @doctor = ApplicationController.current_user(session)
@@ -286,7 +286,7 @@ end
       end
   end
 
-  get '/delete/doctor' do
+  get '/doctor/delete' do
     if ApplicationController.current_user(session).class.name != "Patient"
      if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
