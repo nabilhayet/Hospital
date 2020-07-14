@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
         redirect '/profile/patient'
       end
     else
-      redirect 'profile/doctor'
+      redirect '/profile/doctor'
     end
   end
 
@@ -24,7 +24,7 @@ class AppointmentsController < ApplicationController
           @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
           @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
           flash.next[:message] = "Appointment was created Successfully"
-          redirect "/appointments/#{@apt.id}"
+          redirect "/patient/appointments/#{@apt.id}"
         else
           flash.next[:message] = "Appointment was not created Successfully"
           redirect '/profile/patient'
@@ -34,7 +34,7 @@ class AppointmentsController < ApplicationController
       end
   end
 
-  get '/appointments/:id' do
+  get '/patient/appointments/:id' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
@@ -49,11 +49,11 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  get '/view' do
+  get '/patient/view' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
@@ -68,13 +68,13 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  get '/update' do
+  get '/patient/update' do
    if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
+     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
         @apt = @patient.appointments
           if !@apt.empty?
@@ -83,15 +83,15 @@ class AppointmentsController < ApplicationController
             flash.next[:message] = "You have no appointment to update"
             redirect '/profile/patient'
           end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect 'profile/doctor'
-  end
   end
 
-  get '/appointments/:id/edit' do
+  get '/patient/appointments/:id/edit' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
         @patient = ApplicationController.current_user(session)
@@ -107,11 +107,11 @@ class AppointmentsController < ApplicationController
      redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  patch '/appointments/:id' do
+  patch '/patient/appointments/:id' do
     @patient = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
     @appointment = Appointment.find{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
@@ -123,14 +123,14 @@ class AppointmentsController < ApplicationController
         @apt.date = params[:date]
         @apt.save
         flash.next[:message] = "Appointment was updated Successfully"
-        redirect "/appointments/#{@apt.id}"
+        redirect "/patient/appointments/#{@apt.id}"
       else
         flash.next[:message] = "You can not update this appointment!"
         redirect '/profile/patient'
       end
   end
 
-  get '/delete' do
+  get '/patient/delete' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
@@ -145,11 +145,11 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  get '/appointments/:id/delete' do
+  get '/patient/appointments/:id/delete' do
    if ApplicationController.current_user(session).class.name != "Doctor"
     if ApplicationController.is_logged_in?(session)
       @patient = ApplicationController.current_user(session)
@@ -164,11 +164,11 @@ class AppointmentsController < ApplicationController
       redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  delete '/appointments/:id' do
+  delete '/patient/appointments/:id' do
     if ApplicationController.current_user(session).class.name != "Doctor"
      if ApplicationController.is_logged_in?(session)
        @patient = ApplicationController.current_user(session)
@@ -177,7 +177,7 @@ class AppointmentsController < ApplicationController
        if @apt.patient_id == @patient.id
          @apt.delete
          flash.next[:message] = "Appointment was deleted Successfully!"
-         redirect '/view'
+         redirect '/patient/view'
       else
         flash.next[:message] = "You have no appointment to delete"
         redirect '/profile/patient'
@@ -186,11 +186,11 @@ class AppointmentsController < ApplicationController
         redirect '/'
     end
   else
-    redirect 'profile/doctor'
+    redirect '/profile/doctor'
   end
   end
 
-  get '/appointmentss/:id' do
+  get '/doctor/appointments/:id' do
    if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
@@ -248,7 +248,7 @@ class AppointmentsController < ApplicationController
  end
 end
 
-  get '/appointmentss/:id/edit' do
+  get '/doctor/appointments/:id/edit' do
    if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
@@ -268,7 +268,7 @@ end
   end
   end
 
-  patch '/appointmentss/:id' do
+  patch '/doctor/appointments/:id' do
     @doctor = ApplicationController.current_user(session)
     @apt = Appointment.find_by_id(params[:id])
     @patient = @apt.patient
@@ -279,7 +279,7 @@ end
         @apt.date = params[:date]
         @apt.save
         flash.next[:message] = "Appointment was updated Successfully!"
-        redirect "/appointmentss/#{@apt.id}"
+        redirect "/doctor/appointments/#{@apt.id}"
       else
         flash.now[:message] = "You can not update this appointment"
         erb :'appointments/doctor/update'
@@ -305,7 +305,7 @@ end
   end
  end
 
-  get '/appointmentss/:id/delete' do
+  get '/doctor/appointments/:id/delete' do
    if ApplicationController.current_user(session).class.name != "Patient"
     if ApplicationController.is_logged_in?(session)
       @doctor = ApplicationController.current_user(session)
@@ -324,7 +324,7 @@ end
   end
   end
 
-  delete '/appointmentss/:id' do
+  delete '/doctor/appointments/:id' do
     @apt = Appointment.find_by_id(params[:id])
     @apt.delete
     flash.next[:message] = "Appointment was deleted Successfully!"

@@ -12,7 +12,7 @@
       <body>
         <header>
           <div class="main">
-            <form action="/appointmentss/<%= @apt.id %>" method="POST">
+            <form action="/doctor/appointments/<%= @apt.id %>" method="POST">
               <input id="hidden" type="hidden" name="_method" value="patch">
               <br>
               <p>Date:<input type="date" name="date" id="date" value="<%=@apt.date%>"></input></p>

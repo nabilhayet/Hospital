@@ -4,7 +4,7 @@ class PatientsController < ApplicationController
     erb :'patients/registration/patient'
   end
 
-  post '/registrations' do
+  post '/registration/patient' do
     @patient = Patient.find_by(email: params["email"])
       if @patient
         flash.next[:message] = "Email address already exists."
@@ -26,7 +26,7 @@ class PatientsController < ApplicationController
     erb :'patients/login/patient'
   end
 
-  post '/login' do
+  post '/login/patient' do
     @patient = Patient.find_by(email: params[:email])
       if @patient && @patient.authenticate(params[:password])
         session[:patient_id] = @patient.id
@@ -46,7 +46,7 @@ class PatientsController < ApplicationController
     end
   end
 
-  get '/back/patient'
+  get '/back/patient' do
     if ApplicationController.is_logged_in?(session)
       if ApplicationController.current_user(session).class.name != "Doctor"
         redirect '/profile/patient'

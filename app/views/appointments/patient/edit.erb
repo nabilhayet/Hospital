@@ -12,7 +12,7 @@
     <body>
       <header>
         <div class="main">
-          <form action="/appointments/<%= @apt.id %>" method="POST">
+          <form action="/patient/appointments/<%= @apt.id %>" method="POST">
             <input id="hidden" type="hidden" name="_method" value="patch">
             <%@doctor.each do |doc| %>
             <input type="radio" name="[doctor_id]" id="<%= doc.id %>" value="<%= doc.id %>" <%='checked' if @apt.doctor_id==doc.id%>><%= doc.name %></input><br>
@@ -24,7 +24,7 @@
             <br>
             <input type="submit" value="Update appointment">
             <br>
-            
+
           </form>
         </div>
         <a href="/back/patient">Home</a>
