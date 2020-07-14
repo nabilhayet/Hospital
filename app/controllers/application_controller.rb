@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
     redirect '/'
   end
 
-  def self.current_user(session)
+  def current_user
     if session.key?("patient_id")
       @p = Patient.find_by_id(session[:patient_id])
       @p
@@ -32,7 +32,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  def self.is_logged_in?(session)
+  def is_logged_in?
     if session.key?("patient_id")
       !!session[:patient_id]
     else
@@ -40,8 +40,8 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  def self.current_user_type
-    self.current_user(session).class.name
+  def current_user_type
+    current_user.class.name
   end
 private
 

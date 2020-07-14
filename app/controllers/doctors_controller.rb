@@ -38,8 +38,8 @@ class DoctorsController < ApplicationController
     end
 
   get '/profile/doctor' do
-    if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+    if is_logged_in?
+      @doctor = current_user
       erb :'doctors/profile'
     else
       erb :welcome
@@ -47,8 +47,8 @@ class DoctorsController < ApplicationController
   end
 
   get '/back/doctor' do
-    if ApplicationController.is_logged_in?(session)
-      if ApplicationController.current_user(session).class.name != "Patient"
+    if is_logged_in?
+      if current_user_type != "Patient"
         redirect '/profile/doctor'
       else
         redirect '/profile/patient'

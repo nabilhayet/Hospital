@@ -1,10 +1,10 @@
 class AppointmentsController < ApplicationController
 
   get '/patient/appointment' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
+   if current_user_type != "Doctor"
     @doctor = Doctor.all
-      if ApplicationController.is_logged_in?(session)
-        @patient = ApplicationController.current_user(session)
+      if is_logged_in?
+        @patient = current_user
         erb :'appointments/patient/new'
       else
         redirect '/profile/patient'
@@ -15,7 +15,7 @@ class AppointmentsController < ApplicationController
   end
 
   post '/patient/appointments' do
-    @patient = ApplicationController.current_user(session)
+    @patient = current_user
     @appointment = Appointment.all.select do |apt|
       (apt.time.strftime("%H:%M") == params[:time] && apt.date.to_s == params[:date]) && (apt.patient.id == @patient.id || apt.doctor.id == params[:patient][:doctor_ids])
     end
@@ -35,9 +35,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/appointments/:id' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
-        @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+    if is_logged_in?
+        @patient = current_user
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @patient.id == @apt.patient_id
               erb :'appointments/patient/show'
@@ -54,9 +54,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/view' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
-        @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+    if is_logged_in?
+        @patient = current_user
         @apt = @patient.appointments
           if !@apt.empty?
             erb :'appointments/patient/index'
@@ -73,9 +73,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/update' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-     if ApplicationController.is_logged_in?(session)
-        @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+     if is_logged_in?
+        @patient = current_user
         @apt = @patient.appointments
           if !@apt.empty?
             erb :'appointments/patient/update'
@@ -92,9 +92,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/appointments/:id/edit' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
-        @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+    if is_logged_in?
+        @patient = current_user
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @apt.patient_id == @patient.id
              @doctor = Doctor.all
@@ -112,7 +112,7 @@ class AppointmentsController < ApplicationController
   end
 
   patch '/patient/appointments/:id' do
-    @patient = ApplicationController.current_user(session)
+    @patient = current_user
     @apt = Appointment.find_by_id(params[:id])
     @appointment = Appointment.find{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
 
@@ -131,9 +131,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/delete' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
-      @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+    if is_logged_in?
+      @patient = current_user
       @apt = @patient.appointments
         if !@apt.empty?
           erb :'appointments/patient/remove'
@@ -150,9 +150,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/patient/appointments/:id/delete' do
-   if ApplicationController.current_user(session).class.name != "Doctor"
-    if ApplicationController.is_logged_in?(session)
-      @patient = ApplicationController.current_user(session)
+   if current_user_type != "Doctor"
+    if is_logged_in?
+      @patient = current_user
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.patient_id == @patient.id
            erb :'appointments/patient/delete'
@@ -169,9 +169,9 @@ class AppointmentsController < ApplicationController
   end
 
   delete '/patient/appointments/:id' do
-    if ApplicationController.current_user(session).class.name != "Doctor"
-     if ApplicationController.is_logged_in?(session)
-       @patient = ApplicationController.current_user(session)
+    if current_user_type != "Doctor"
+     if is_logged_in?
+       @patient = current_user
 
        @apt = Appointment.find_by_id(params[:id])
        if @apt.patient_id == @patient.id
@@ -191,9 +191,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/doctor/appointments/:id' do
-   if ApplicationController.current_user(session).class.name != "Patient"
-    if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+   if current_user_type != "Patient"
+    if is_logged_in?
+      @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
 
         if @apt!=nil && @doctor.id == @apt.doctor_id
@@ -211,9 +211,9 @@ class AppointmentsController < ApplicationController
   end
 
   get '/doctor/view' do
-   if ApplicationController.current_user(session).class.name != "Patient"
-    if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+   if current_user_type != "Patient"
+    if is_logged_in?
+      @doctor = current_user
       @apt = @doctor.appointments
         if !@apt.empty?
           erb :'appointments/doctor/index'
@@ -230,9 +230,9 @@ class AppointmentsController < ApplicationController
  end
 
  get '/doctor/update' do
-  if ApplicationController.current_user(session).class.name != "Patient"
-   if ApplicationController.is_logged_in?(session)
-     @doctor = ApplicationController.current_user(session)
+  if current_user_type != "Patient"
+   if is_logged_in?
+     @doctor = current_user
      @apt = @doctor.appointments
         if !@apt.empty?
           erb :'appointments/doctor/update'
@@ -249,9 +249,9 @@ class AppointmentsController < ApplicationController
 end
 
   get '/doctor/appointments/:id/edit' do
-   if ApplicationController.current_user(session).class.name != "Patient"
-    if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+   if current_user_type != "Patient"
+    if is_logged_in?
+      @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id==@doctor.id
            @doctor = Doctor.all
@@ -269,7 +269,7 @@ end
   end
 
   patch '/doctor/appointments/:id' do
-    @doctor = ApplicationController.current_user(session)
+    @doctor = current_user
     @apt = Appointment.find_by_id(params[:id])
     @patient = @apt.patient
     @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
@@ -287,9 +287,9 @@ end
   end
 
   get '/doctor/delete' do
-    if ApplicationController.current_user(session).class.name != "Patient"
-     if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+    if current_user_type != "Patient"
+     if is_logged_in?
+      @doctor = current_user
       @apt = @doctor.appointments
         if !@apt.empty?
           erb :'appointments/doctor/remove'
@@ -306,9 +306,9 @@ end
  end
 
   get '/doctor/appointments/:id/delete' do
-   if ApplicationController.current_user(session).class.name != "Patient"
-    if ApplicationController.is_logged_in?(session)
-      @doctor = ApplicationController.current_user(session)
+   if current_user_type != "Patient"
+    if is_logged_in?
+      @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id == @doctor.id
           erb :'appointments/doctor/delete'
