@@ -14,10 +14,10 @@ class PatientsController < ApplicationController
           if @patient.save
             flash.next[:message] = "Successfully registered."
             session[:patient_id] = @patient.id
-            redirect '/login/patient'
+            redirect '/profile/patient'
           else
             flash.next[:message] = "Please fill out form correctly!"
-            redirect 'registrations/patient'
+            redirect '/registrations/patient'
           end
         end
   end
