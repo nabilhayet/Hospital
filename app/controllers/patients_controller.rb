@@ -18,7 +18,8 @@ class PatientsController < ApplicationController
           else
             flash.next[:message] = "Please fill out form correctly!"
             redirect 'registrations/patient'
-      end
+          end
+        end
   end
 
   get '/login/patient' do
@@ -45,9 +46,16 @@ class PatientsController < ApplicationController
     end
   end
 
-  get '/sessions/logout' do
-    session.clear
-    redirect '/'
+  get '/back/patient'
+    if ApplicationController.is_logged_in?(session)
+      if ApplicationController.current_user(session).class.name != "Doctor"
+        redirect '/profile/patient'
+      else
+        redirect '/profile/doctor'
+      end
+    else
+      redirect '/'
+    end
   end
 
   get '/home/patient' do

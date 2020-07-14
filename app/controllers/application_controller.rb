@@ -17,6 +17,11 @@ class ApplicationController < Sinatra::Base
     erb :welcome
   end
 
+  get '/logout' do
+    session.clear
+    redirect '/'
+  end
+
   def self.current_user(session)
     if session.key?("patient_id")
       @p = Patient.find_by_id(session[:patient_id])
