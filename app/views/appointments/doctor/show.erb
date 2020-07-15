@@ -4,6 +4,8 @@
       <link rel="stylesheet" href="/stylesheets/hos.css">
       <title>Health Service</title>
       <br>
+      <a href="/back/doctor">Home</a>
+      <br> 
       <%=flash[:message]%>
       <br>
       <img class="img-hos" src="../images/hospital-2.jpg">
@@ -21,10 +23,10 @@
             <h1>Appt time: <%= @apt.time.strftime("%I:%M %p")%> </h1>
             <br>
             <h1>Appt date: <%= @apt.date%> </h1>
-            <br> 
-          
+            <br>
+
         </div>
-        <a href="/back/doctor">Home</a>
+
       </header>
     </body>
     </html>

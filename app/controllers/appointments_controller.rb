@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
 
-  get '/patient/appointment' do
+  get '/patient/appointments/new' do
    if current_user_type != "Doctor"
     @doctor = Doctor.all
       if is_logged_in?
@@ -53,7 +53,7 @@ class AppointmentsController < ApplicationController
   end
   end
 
-  get '/patient/view' do
+  get '/patient/appointments' do
    if current_user_type != "Doctor"
     if is_logged_in?
         @patient = current_user
@@ -70,25 +70,6 @@ class AppointmentsController < ApplicationController
   else
     redirect '/profile/doctor'
   end
-  end
-
-  get '/patient/update' do
-   if current_user_type != "Doctor"
-     if is_logged_in?
-        @patient = current_user
-        @apt = @patient.appointments
-          if !@apt.empty?
-            erb :'appointments/patient/update'
-          else
-            flash.next[:message] = "You have no appointment to update"
-            redirect '/profile/patient'
-          end
-      else
-        redirect '/'
-      end
-    else
-      redirect '/profile/doctor'
-    end
   end
 
   get '/patient/appointments/:id/edit' do
@@ -130,25 +111,6 @@ class AppointmentsController < ApplicationController
       end
   end
 
-  get '/patient/delete' do
-   if current_user_type != "Doctor"
-    if is_logged_in?
-      @patient = current_user
-      @apt = @patient.appointments
-        if !@apt.empty?
-          erb :'appointments/patient/remove'
-        else
-          flash.next[:message] = "You have no appointment to delete"
-          redirect '/profile/patient'
-        end
-    else
-      redirect '/'
-    end
-  else
-    redirect '/profile/doctor'
-  end
-  end
-
   get '/patient/appointments/:id/delete' do
    if current_user_type != "Doctor"
     if is_logged_in?
@@ -177,7 +139,7 @@ class AppointmentsController < ApplicationController
        if @apt.patient_id == @patient.id
          @apt.delete
          flash.next[:message] = "Appointment was deleted Successfully!"
-         redirect '/patient/view'
+         redirect '/profile/patient'
       else
         flash.next[:message] = "You have no appointment to delete"
         redirect '/profile/patient'

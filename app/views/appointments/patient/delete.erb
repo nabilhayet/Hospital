@@ -3,7 +3,7 @@
       <meta charset="UTF-8">
       <link rel="stylesheet" href="/stylesheets/hos.css">
       <title>Health Service</title>
-      <h1>Are you sure that you want to delete this appointment?</h1>
+      <a href="/back/patient">Home</a>
       <br>
       <br>
       <img class="img-hos" src="/images/hospital-2.jpg">
@@ -12,14 +12,13 @@
     <body>
       <header>
         <div class="main">
+          <h2>Are you sure that you want to delete this appointment?</h2>
           <form action="/patient/appointments/<%= @apt.id %>" method="post">
             <input id="hidden" type="hidden" name="_method" value="delete">
             <input type="submit" value="delete">
             <br>
-
           </form>
         </div>
-          <a href="/back/patient">Home</a>
       </header>
     </body>
 </html>
