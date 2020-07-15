@@ -3,6 +3,7 @@
       <meta charset="UTF-8">
       <link rel="stylesheet" href="/stylesheets/hos.css">
       <title>Health Service</title>
+      <a href="/back/doctor">Home</a>
       <br>
       <%=flash[:message]%>
       <br>
@@ -10,7 +11,6 @@
       <br>
     </head>
     <body>
-        <a href="/back/doctor">Home</a>
       <header>
         <div class="main">
           <h1> The appointments are : </h1>
@@ -25,10 +25,14 @@
             <h2>Appointment Date : <%=a.date%> </h2>
             <br>
             <br>
-
+            <br>
+            <li> <a href="/doctor/appointments/<%=a.id%>/edit">Update an Appointment</a> </li>
+            <br>
+            <br>
+            <li> <a href="/doctor/appointments/<%=a.id%>/delete">Delete an Appointment</a> </li>
+            <br>
           <%end%>
         </div>
-
       </header>
     </body>
     </html>
