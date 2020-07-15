@@ -249,21 +249,22 @@ class AppointmentsController < ApplicationController
 
   delete '/doctor/appointments/:id' do
     if current_user_type != "Patient"
-     if is_logged_in?
-       @doctor = current_user
-       @apt = Appointment.find_by_id(params[:id])
-       if @apt.doctor_id == @doctor.id
-         @apt.delete
-         flash.next[:message] = "Appointment was deleted Successfully!"
-         redirect '/profile/doctor'
+      if is_logged_in?
+        @doctor = current_user
+        @apt = Appointment.find_by_id(params[:id])
+          if @apt.doctor_id == @doctor.id
+            @apt.delete
+            flash.next[:message] = "Appointment was deleted Successfully!"
+            redirect '/profile/doctor'
+          else
+            flash.next[:message] = "You have no appointment to delete"
+            redirect '/profile/doctor'
+          end
       else
-        flash.next[:message] = "You have no appointment to delete"
-        redirect '/profile/doctor'
+        redirect '/'
       end
     else
-        redirect '/'
+      redirect '/profile/patient'
     end
-    else
-    redirect '/profile/patient'
-    end
+  end
 end
