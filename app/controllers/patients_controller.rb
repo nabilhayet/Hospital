@@ -39,10 +39,14 @@ class PatientsController < ApplicationController
 
   get '/profile/patient' do
     if is_logged_in?
-      @patient = current_user
-      erb :'patients/profile'
+      if current_user_type != "Doctor"
+        @patient = current_user
+        erb :'patients/profile'
+      else
+        redirect '/profile/doctor'
+      end
     else
-      erb :welcome
+      redirect '/'
     end
   end
 
