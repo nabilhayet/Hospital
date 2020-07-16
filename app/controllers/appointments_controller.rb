@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
 
   get '/patient/appointments/:id' do
    if current_user_type != "Doctor"
-    if is_logged_in?
+     if is_logged_in?
         @patient = current_user
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @patient.id == @apt.patient_id
@@ -51,17 +51,17 @@ class AppointmentsController < ApplicationController
             flash.next[:message] = "No such appointment exists!"
             redirect '/profile/patient'
           end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect '/profile/doctor'
-  end
   end
 
   get '/patient/appointments' do
    if current_user_type != "Doctor"
-    if is_logged_in?
+     if is_logged_in?
         @patient = current_user
         @apt = @patient.appointments
           if !@apt.empty?
@@ -70,17 +70,17 @@ class AppointmentsController < ApplicationController
             flash.next[:message] = "You have no appointment to view"
             redirect '/profile/patient'
           end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect '/profile/doctor'
-  end
   end
 
   get '/patient/appointments/:id/edit' do
    if current_user_type != "Doctor"
-    if is_logged_in?
+     if is_logged_in?
         @patient = current_user
         @apt = Appointment.find_by_id(params[:id])
           if @apt!=nil && @apt.patient_id == @patient.id
@@ -90,12 +90,12 @@ class AppointmentsController < ApplicationController
             flash.next[:message] = "You have no appointment to update of this number"
             redirect '/profile/patient'
           end
+      else
+        redirect '/'
+      end
     else
-     redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect '/profile/doctor'
-  end
   end
 
   patch '/patient/appointments/:id' do
@@ -124,67 +124,66 @@ class AppointmentsController < ApplicationController
 
   get '/patient/appointments/:id/delete' do
    if current_user_type != "Doctor"
-    if is_logged_in?
-      @patient = current_user
-      @apt = Appointment.find_by_id(params[:id])
-        if @apt!=nil && @apt.patient_id == @patient.id
-           erb :'appointments/patient/delete'
-        else
-          flash.next[:message] = "You have no appointment to delete"
-          redirect '/profile/patient'
-        end
+     if is_logged_in?
+       @patient = current_user
+       @apt = Appointment.find_by_id(params[:id])
+          if @apt!=nil && @apt.patient_id == @patient.id
+            erb :'appointments/patient/delete'
+          else
+            flash.next[:message] = "You have no appointment to delete"
+            redirect '/profile/patient'
+          end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect '/profile/doctor'
-  end
   end
 
   delete '/patient/appointments/:id' do
     if current_user_type != "Doctor"
-     if is_logged_in?
-       @patient = current_user
-       @apt = Appointment.find_by_id(params[:id])
-       if @apt.patient_id == @patient.id
-         @apt.delete
-         flash.next[:message] = "Appointment was deleted Successfully!"
-         redirect '/profile/patient'
+      if is_logged_in?
+        @patient = current_user
+        @apt = Appointment.find_by_id(params[:id])
+          if @apt.patient_id == @patient.id
+            @apt.delete
+            flash.next[:message] = "Appointment was deleted Successfully!"
+            redirect '/profile/patient'
+          else
+            flash.next[:message] = "You have no appointment to delete"
+            redirect '/profile/patient'
+          end
       else
-        flash.next[:message] = "You have no appointment to delete"
-        redirect '/profile/patient'
+        redirect '/'
       end
     else
-        redirect '/'
+      redirect '/profile/doctor'
     end
-  else
-    redirect '/profile/doctor'
-  end
   end
 
   get '/doctor/appointments/:id' do
    if current_user_type != "Patient"
-    if is_logged_in?
+     if is_logged_in?
       @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
-
         if @apt!=nil && @doctor.id == @apt.doctor_id
           erb :'appointments/doctor/show'
         else
           flash.next[:message] = "You don't have permission to view this!"
           redirect '/profile/doctor'
         end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/patient'
     end
-  else
-    redirect '/profile/patient'
-  end
   end
 
   get '/doctor/appointments' do
    if current_user_type != "Patient"
-    if is_logged_in?
+     if is_logged_in?
       @doctor = current_user
       @apt = @doctor.appointments
         if !@apt.empty?
@@ -193,17 +192,17 @@ class AppointmentsController < ApplicationController
           flash.next[:message] = "You have no appointment to view"
           redirect '/profile/doctor'
         end
-   else
-     redirect '/'
-   end
- else
-   redirect '/profile/patient'
- end
- end
+      else
+        redirect '/'
+      end
+    else
+      redirect '/profile/patient'
+    end
+  end
 
  get '/doctor/appointments/:id/edit' do
    if current_user_type != "Patient"
-    if is_logged_in?
+     if is_logged_in?
       @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id==@doctor.id
@@ -213,12 +212,12 @@ class AppointmentsController < ApplicationController
           flash.next[:message] = "You have no appointment to update of this number"
           redirect '/profile/doctor'
         end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/patient'
     end
-  else
-    redirect '/profile/patient'
-  end
   end
 
   patch '/doctor/appointments/:id' do
@@ -246,7 +245,7 @@ class AppointmentsController < ApplicationController
 
   get '/doctor/appointments/:id/delete' do
    if current_user_type != "Patient"
-    if is_logged_in?
+     if is_logged_in?
       @doctor = current_user
       @apt = Appointment.find_by_id(params[:id])
         if @apt!=nil && @apt.doctor_id == @doctor.id
@@ -255,12 +254,12 @@ class AppointmentsController < ApplicationController
           flash.next[:message] = "You have no appointment to delete"
           redirect '/profile/doctor'
         end
+      else
+        redirect '/'
+      end
     else
-      redirect '/'
+      redirect '/profile/patient'
     end
-  else
-    redirect '/profile/patient'
-  end
   end
 
   delete '/doctor/appointments/:id' do
