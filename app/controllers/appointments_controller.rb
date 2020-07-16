@@ -15,23 +15,29 @@ class AppointmentsController < ApplicationController
   end
 
   post '/patient/appointments' do
-    @patient = current_user
-    @appointment = Appointment.all.select do |apt|
+    @a = params[:patient][:doctor_ids] == "" || params[:time] == "" || params[:date] == ""
+    if !@a
+      @patient = current_user
+      @appointment = Appointment.all.select do |apt|
       (apt.time.strftime("%H:%M") == params[:time] && apt.date.to_s == params[:date]) && (apt.patient.id == @patient.id || apt.doctor.id == params[:patient][:doctor_ids])
-    end
-      if @patient
-        if @appointment.empty?
-          @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
-          @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
-          flash.next[:message] = "Appointment was created Successfully"
-          redirect "/patient/appointments/#{@apt.id}"
-        else
-          flash.next[:message] = "Appointment was not created Successfully"
-          redirect '/profile/patient'
-        end
-      else
-        redirect '/'
       end
+        if @patient
+          if @appointment.empty?
+            @doctor = Doctor.find_by_id(params[:patient][:doctor_ids])
+            @apt = Appointment.create(doctor_id: params[:patient][:doctor_ids], patient_id: @patient.id, date: params[:date],time: params[:time])
+            flash.next[:message] = "Appointment was created Successfully"
+            redirect "/patient/appointments/#{@apt.id}"
+          else
+            flash.next[:message] = "Appointment was not created Successfully"
+            redirect '/profile/patient'
+          end
+        else
+          redirect '/patient/appointments/new'
+        end
+    else
+      flash.next[:message] = "Please fill out each field!"
+      redirect '/patient/appointments/new'
+    end
   end
 
   get '/patient/appointments/:id' do
@@ -93,22 +99,27 @@ class AppointmentsController < ApplicationController
   end
 
   patch '/patient/appointments/:id' do
-    @patient = current_user
-    @apt = Appointment.find_by_id(params[:id])
-    @appointment = Appointment.find{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
-
-      if !@appointment
-        @apt.doctor_id = params[:doctor_id]
-        @apt.patient_id = @patient.id
-        @apt.time = params[:time]
-        @apt.date = params[:date]
-        @apt.save
-        flash.next[:message] = "Appointment was updated Successfully"
-        redirect "/patient/appointments/#{@apt.id}"
-      else
-        flash.next[:message] = "You can not update this appointment!"
-        redirect '/profile/patient'
-      end
+    @a = params[:doctor_id] == "" || params[:time] == "" || params[:date] == ""
+    if !@a
+      @patient = current_user
+      @apt = Appointment.find_by_id(params[:id])
+      @appointment = Appointment.find{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==params[:doctor_id])}
+        if !@appointment
+          @apt.doctor_id = params[:doctor_id]
+          @apt.patient_id = @patient.id
+          @apt.time = params[:time]
+          @apt.date = params[:date]
+          @apt.save
+          flash.next[:message] = "Appointment was updated Successfully"
+          redirect "/patient/appointments/#{@apt.id}"
+        else
+          flash.next[:message] = "You can not update this appointment!"
+          redirect '/profile/patient'
+        end
+    else
+      flash.next[:message] = "Please fill out all the fields!"
+      redirect '/patient/appointments/:id/edit'
+    end
   end
 
   get '/patient/appointments/:id/delete' do
@@ -211,21 +222,26 @@ class AppointmentsController < ApplicationController
   end
 
   patch '/doctor/appointments/:id' do
-    @doctor = current_user
-    @apt = Appointment.find_by_id(params[:id])
-    @patient = @apt.patient
-    @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
-
-      if @appointment.empty?
-        @apt.time = params[:time]
-        @apt.date = params[:date]
-        @apt.save
-        flash.next[:message] = "Appointment was updated Successfully!"
-        redirect "/doctor/appointments/#{@apt.id}"
-      else
-        flash.now[:message] = "You can not update this appointment"
-        erb :'appointments/doctor/edit'
-      end
+    @a = params[:time] == "" || params[:date] == ""
+    if !@a
+      @doctor = current_user
+      @apt = Appointment.find_by_id(params[:id])
+      @patient = @apt.patient
+      @appointment = Appointment.select{|apt| apt.time.strftime("%H:%M")==params[:time] && apt.date.to_s==params[:date] && (apt.patient.id==@patient.id || apt.doctor.id==@doctor.id)}
+        if @appointment.empty?
+          @apt.time = params[:time]
+          @apt.date = params[:date]
+          @apt.save
+          flash.next[:message] = "Appointment was updated Successfully!"
+          redirect "/doctor/appointments/#{@apt.id}"
+        else
+          flash.now[:message] = "You can not update this appointment"
+          erb :'appointments/doctor/edit'
+        end
+    else
+        flash.next[:message] = "Please fill out all the fields!"
+        redirect '/doctor/appointments/:id/edit'
+    end
   end
 
   get '/doctor/appointments/:id/delete' do

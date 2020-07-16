@@ -8,6 +8,7 @@
       <h1>Hello <%=@patient.name %></h1>
       <p>Create a New appointment From Existing Doctors</p>
       <br>
+      <%=flash[:message]%>
       <img class="img-hos" src="/images/hospital-2.jpg">
     </head>
       <body>
@@ -21,7 +22,7 @@
               <br>
               <p>Date:<input type="date" name="date" id="date" required></p>
               <br>
-              <p>Time:<input type="time" name="time" id="time" min="09:00" max="17:00" required></p>
+              <p>Time:<input type="time" name="time" id="time" min="09:00" max="17:00"></p>
               <br>
               <input type="submit" value="Create appointment">
             </form>
