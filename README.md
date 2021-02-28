@@ -14,11 +14,17 @@ Table of Contents
 - [Challenges](#challenges)
 - [Future-Implementation](#future-implementation)
 - [Code-Snippet](#code-snippet)
-- [Tests](#tests)
                                
 ## Features
 <ul>
- A patient can sign-up. --A patient can log-in. --A patient can make an appointment. --Display details of the appointment for a particular patient. --Display a single appointment of a patient. --Update an appointment for a particular patient. --Delete an appointment for a particular patient. --A doctor can sign-up. --A doctor can log-in. --Display details of the appointment for a particular doctor. --Display a single appointment of a doctor. --Update an appointment for a particular doctor. --Delete an appointment for a particular doctor.
+  <li>Sign in/Sign up option for users and doctors</li>
+  <li>Full CRUD capabilities for users such as</li>
+  <li>Make a new appointment</li>
+  <li>View all existing appointments on this application</li>
+  <li>Edit/Delete only the appointments make by the logged in user</li>
+  <li>Full CRUD capabilities for doctors except create such as</li>
+  <li>View all existing appointments on this application</li>
+  <li>Edit/Delete only the appointments added by the logged in users</li>
 </ul>
 
 ## Signup 
@@ -29,27 +35,42 @@ Table of Contents
 ## Tech-Stack
 <p>This web app makes use of the following:</p>
 
+* sinatra
+* activerecord, '~> 4.2', '>= 4.2.6', :require => active_record
+* sinatra-activerecord, :require => sinatra/activerecord
+* rake
+* require_all
+* sqlite3, '~> 1.3.6'
+* thin
+* shotgun
 * pry
-* nokogiri 
+* bcrypt
+* tux
+* sinatra-flash
 
 ## Installing
 <ul>
    <li> Clone this repo to your local machine git clone <this-repo-url></li>
+   <li> run bundle install to install required dependencies</li>
+   <li> run rails db:create to create a database locally.</li>
+   <li> run rails db:migrate to create tables into the database.</li>
+   <li> run rails db:seed to create seed data.</li>
    <li> Type 'shotgun'</li>
-  
 </ul>
         
 ## Challenges
 <ul>
-  <li> Scrapping was the most difficult task of this project</li>
-  <li> After fething data from the website, filtering out perticular info was also challenging</li>
-  <li> Loading so much data took a lot of time to run the application</li>
+  <li> Preventing users from accessing other user's info</li>
+  <li> Adding flash message</li>
+  <li> Rafactor using helper methods</li>
+  <li> Formatting date and time </li>
 </ul>
 
 ## Future-Implementation
 <ul>
-  <li> Add more classes like Editor</li>
-  <li> Remove duplicacy of code</li>
+  <li> Add more models like Prescription, tests etc</li>
+  <li> Add Bootstrap for styling</li>
+  <li> Add a range for the booking time</li>
 </ul>
 
 ## Code-Snippet 
