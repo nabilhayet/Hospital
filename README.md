@@ -1,9 +1,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/nabilhayet/Restaurant) ![GitHub forks](https://img.shields.io/github/forks/nabilhayet/Restaurant) ![GitHub followers](https://img.shields.io/github/followers/nabilhayet) ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/nabilhayet/Restaurant)                                          
                                         <h1>:bomb: Hospital :bomb: </h1>
                                                       
-The name of this project is . This project lets a patient or a doctor to sign-up and log-in. After logged in, a patient can make an appointment on a particular date at a fixed time by selecting an existing doctor in the system. A doctor can also log into the system and view the existing appointments. Updating or deleting an appointment option available to both doctor and patients.
+The name of this project is. This project lets a patient or a doctor sign-up and log-in. After logged in, a patient can make an appointment on a particular date at a fixed time by selecting an existing doctor in the system. A doctor can also log into the system and view the existing appointments. Updating or deleting an appointment option available to both doctor and patients.
 
-<p>This project was created to provide a platform which will allow both doctor and patient to perform any task on a common platform. Instead of creating two separate application for both, i decided to build something that would connect the both classes.</p>
+<p>This project was created to provide a platform that will allow both doctor and patient to perform any task on a common platform. Instead of creating two separate applications for both, I decided to build something that would connect both classes.</p>
 
 <a href="https://www.youtube.com/watch?v=UWaRqHpO8fU&t=2s">Demo</a>
 
