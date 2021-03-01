@@ -27,10 +27,23 @@ Table of Contents
   <li>Edit/Delete only the appointments added by the logged in users</li>
 </ul>
 
-## Signup 
+## Patient Signup
+![patient_signup](https://user-images.githubusercontent.com/33500404/109451153-c7843200-7a1a-11eb-8b48-f0f60eb2d7c5.gif)
 
-![dem](https://user-images.githubusercontent.com/33500404/109376302-97f5ee00-7891-11eb-89aa-6fdfd054c8c9.gif)
+## Make Appointment 
+![make_apt](https://user-images.githubusercontent.com/33500404/109450955-4167eb80-7a1a-11eb-822f-bd2304fed853.gif)
 
+## View Appointments
+![view_appointments](https://user-images.githubusercontent.com/33500404/109449771-45463e80-7a17-11eb-95d5-de1bfa07804c.gif)
+
+## Update Appointment
+![update_apt](https://user-images.githubusercontent.com/33500404/109450657-69a31a80-7a19-11eb-9c4f-404457be3cbe.gif)
+
+## Delete Appointment
+![delete_apt](https://user-images.githubusercontent.com/33500404/109450245-6eb39a00-7a18-11eb-923e-e50ed9e827f1.gif)
+
+## Doctor Signin
+![doctor_login](https://user-images.githubusercontent.com/33500404/109450502-05805680-7a19-11eb-90f2-0b78c6bad6fc.gif)
 
 ## Tech-Stack
 <p>This web app makes use of the following:</p>
