@@ -40,7 +40,7 @@ Table of Contents
 ![update_apt](https://user-images.githubusercontent.com/33500404/109450657-69a31a80-7a19-11eb-9c4f-404457be3cbe.gif)
 
 ## Delete Appointment
-![delete_apt](https://user-images.githubusercontent.com/33500404/109450245-6eb39a00-7a18-11eb-923e-e50ed9e827f1.gif)
+![delete_pat_apt](https://user-images.githubusercontent.com/33500404/109451970-ae7c8080-7a1c-11eb-89d6-b92801d596b0.gif)
 
 ## Doctor Signin
 ![doctor_login](https://user-images.githubusercontent.com/33500404/109450502-05805680-7a19-11eb-90f2-0b78c6bad6fc.gif)
