@@ -34,7 +34,7 @@ Table of Contents
 ![make_apt](https://user-images.githubusercontent.com/33500404/109450955-4167eb80-7a1a-11eb-822f-bd2304fed853.gif)
 
 ## View Appointments
-![view_appointments](https://user-images.githubusercontent.com/33500404/109449771-45463e80-7a17-11eb-95d5-de1bfa07804c.gif)
+![view_apt](https://user-images.githubusercontent.com/33500404/109451526-9eb06c80-7a1b-11eb-98db-abcb5fd8cb53.gif)
 
 ## Update Appointment
 ![update_apt](https://user-images.githubusercontent.com/33500404/109450657-69a31a80-7a19-11eb-9c4f-404457be3cbe.gif)
